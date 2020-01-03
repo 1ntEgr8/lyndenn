@@ -38,7 +38,7 @@
             <span class="x">&Cross;</span>
             <div class="title">Presets</div>
             <div class="container">
-                <div class="btn active">Gosper</div>
+                <div class="btn">Gosper</div>
                 <div class="btn">Dragon</div>
                 <div class="btn">Koch</div>
             </div>
@@ -46,6 +46,30 @@
         <div id="config" class="block">
             <span class="x">&Cross;</span>
             <div class="title">Config</div>
+            <form action="#">
+                <ul>
+                    <li>
+                        <label for="variables">variables</label>
+                        <input type="text" id="variables" name="variables">
+                    </li>
+                    <li>
+                        <label for="constants">constants</label>
+                        <input type="text" id="constants" name="constants">
+                    </li>
+                    <li>
+                        <label for="axiom">axiom</label>
+                        <input type="text" id="axiom" name="axiom">
+                    </li>
+                    <li>
+                        <label for="rules">rules</label>
+                        <textarea id="rules" name="rules"></textarea>
+                    </li>
+                    <li>
+                        <label for="ops">ops</label>
+                        <textarea id="ops" name="ops"></textarea>
+                    </li>
+                </ul>
+            </form>
         </div>
         <div id="help" class="block">
             <span class="x">&Cross;</span>
