@@ -2,7 +2,8 @@ function prepCanvas(turtle) {
     document.getElementById("canvas").appendChild(turtle.canvas);
     centerTurtle(turtle);
     turtle.setStyles({
-        "stroke-width": "4px"
+        "stroke-width": "4px",
+        "stroke": "white"
     })
 }
 
@@ -65,6 +66,43 @@ function tree() {
             "]": "< r45"
         }
     });
+}
+
+const btnPresets = document.getElementById("btnPresets"),
+    btnConfig = document.getElementById("btnConfig"),
+    btnHelp = document.getElementById("btnHelp"),
+    presets = document.getElementById("presets"),
+    config = document.getElementById("config"),
+    help = document.getElementById("help"),
+    mainBody = document.getElementById("main-body");
+
+btnPresets.addEventListener('click', () => {
+    slideIn(presets);
+});
+btnConfig.addEventListener('click', () => {
+    slideIn(config);
+})
+btnHelp.addEventListener('click', () => {
+    slideIn(help);
+})
+
+Array.from(document.querySelectorAll('.x')).forEach(cross => {
+    cross.addEventListener('click', (e) => {
+        slideOut(e.target.parentElement);
+        mainBody.style.opacity = 1; 
+    })
+});
+
+function slideIn(el) {
+    mainBody.style.opacity = 0.1;
+    el.classList.add("slideIn");
+    el.classList.remove("slideOut");
+}
+
+function slideOut(el) {
+    mainBody.style.opacity = 1;
+    el.classList.add("slideOut");
+    el.classList.remove("slideIn");
 }
 
 gosper();

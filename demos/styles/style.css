@@ -2,7 +2,7 @@ body {
     padding: 0px;
     margin : 0px;
     font-family: Hack, monospace;
-    background: #afd6ff;
+    background: #1b0b3c;
     --primary: #3c81ff;
 }
 
@@ -15,21 +15,27 @@ body {
 }
 
 #bodayy {
-    padding: 30px 0px 30px 0px;
+    padding: 0px 0px 30px 0px;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
 }
 
 #canvas {
-    background: white;
+    background: #05032d;
     outline: 5px solid #82aeff;
     overflow: scroll;
     height: 500px;
     width: 700px;
 }
 
+#options {
+    display: flex;
+    padding: 0px 0px 30px 0px;
+}
+
 #controls {
-    padding: 20px 40px 20px 40px;
+    padding: 2030 40px 20px 40px;
     text-align: center;
     outline: 5px solid pink;
 }
@@ -50,4 +56,93 @@ body {
     font-size: 1rem;
     font-weight: bold;
     color: var(--primary);
+}
+
+
+.btn {
+    position: relative;
+    background: #9e92ff;
+    font-weight: bold;
+    padding: 10px;
+    margin: 0px 30px 0px 30px;
+    color: white;
+    border: 3px solid #d26ef3;
+    box-shadow: 4px 4px blueviolet;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:active {
+    top: 4px;
+    box-shadow: none; 
+}
+
+.block {
+    position: absolute;
+    top: -500px;
+    height: 500px;
+    width: 500px;
+    background: #82aeff;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.container {
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.container > div {
+    margin: 10px;
+}
+
+.active {
+    background: #4bd669;
+    border: 3px solid #43ab43;
+    box-shadow: none; 
+}
+
+.x {
+    position: relative;
+    cursor: pointer;
+    top: 10px;
+    left: calc(475px - 1rem);
+    font-size: 2rem;
+}
+
+.options-body {
+    display: flex;
+    justify-content: center;
+}
+
+.slideIn {
+    animation: slideIn 0.2s ease forwards;
+}
+
+.slideOut {
+    animation: slideOut 0.2s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        top: -500px;
+    }
+    to {
+        top: calc(50vh - 250px);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        top: calc(50vh - 250px); 
+    }
+    to {
+        top: -500px;
+    }
 }
