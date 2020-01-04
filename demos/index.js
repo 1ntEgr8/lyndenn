@@ -43,8 +43,6 @@ const PRESETS = [
         },
         ops: {
             "F": "f10",
-            "X": "",
-            "Y": "",
             "+": "r90",
             "-": "r-90"
         },
@@ -64,8 +62,7 @@ const PRESETS = [
         },
         order: 3
     },
-]
-const ORDER = 3;
+];
 
 const btnPresets = document.getElementById("btnPresets"),
     btnConfig = document.getElementById("btnConfig"),
@@ -151,7 +148,7 @@ function fillForm(config) {
     for (let i in config.ops) {
         ops.innerHTML += `${i} => ${config.ops[i]},\n`;
     }
-    order.value = ORDER;
+    order.value = config.order;
 }
 
 function prepTurtle(turtle) {
