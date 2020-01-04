@@ -38,7 +38,7 @@
             <span class="x">&Cross;</span>
             <div class="title">Presets</div>
             <div class="container">
-                <div class="btn">Gosper</div>
+                <div class="btn active">Gosper</div>
                 <div class="btn">Dragon</div>
                 <div class="btn">Koch</div>
             </div>
@@ -47,6 +47,7 @@
             <span class="x">&Cross;</span>
             <div class="title">Config</div>
             <form action="#">
+                <p style="color: #2f2f2f; font-size: 0.75rem;">Refer to .help for info on how to set lyndenn up!</p>
                 <ul>
                     <li>
                         <label for="variables">variables</label>
@@ -68,7 +69,12 @@
                         <label for="ops">ops</label>
                         <textarea id="ops" name="ops"></textarea>
                     </li>
+                    <li>
+                        <label for="order">order</label>
+                        <input type="text" id="order" name="order">
+                    </li>
                 </ul>
+                <div class="btn" id="animate">Animate</div>
             </form>
         </div>
         <div id="help" class="block">

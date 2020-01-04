@@ -78,10 +78,11 @@ body {
 
 .block {
     position: absolute;
-    top: -500px;
+    top: -600px;
     height: 500px;
     width: 500px;
     background: #82aeff;
+    outline: 5px solid #9e92ff;
 }
 
 .title {
@@ -130,7 +131,7 @@ body {
 
 @keyframes slideIn {
     from {
-        top: -500px;
+        top: -600px;
     }
     to {
         top: calc(50vh - 250px);
@@ -142,7 +143,7 @@ body {
         top: calc(50vh - 250px); 
     }
     to {
-        top: -500px;
+        top: -600px;
     }
 }
 
@@ -151,14 +152,15 @@ form {
     /* Center the form on the page */
     margin: 0 auto;
     width: 400px;
+    text-align: center;
     /* Form outline */
-    padding: 1em;
   }
   
   ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0px;
+    margin-bottom: 10px;
   }
   
   form li + li {
@@ -175,22 +177,18 @@ form {
   
   input, 
   textarea {
-    /* To make sure that all text fields have the same font settings
-       By default, textareas have a monospace font */
-    font: 1em sans-serif;
-  
-    /* Uniform text field size */
     width: 300px;
+    font-family: Hack, monospace;
+    font-size: 0.8rem;
     box-sizing: border-box;
-  
-    /* Match form field borders */
-    border: 1px solid #999;
+    border: 2px solid black;
+    padding: 5px;
   }
   
   input:focus, 
   textarea:focus {
     /* Additional highlight for focused elements */
-    border-color: #000;
+    border: 3px solid black;
   }
   
   textarea {

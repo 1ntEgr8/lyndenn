@@ -8,46 +8,7 @@ function prepCanvas(turtle) {
 }
 
 function centerTurtle(turtle) {
-    turtle.moveTo(350, 250);
-}
-
-function dragon() {
-    const dragon = lyndenn({
-        variables: ["X", "Y"],
-        constants: ["F", "+", "-"],
-        axiom: "FX",
-        rules: {
-            "X": "X+YF+",
-            "Y": "-FX-Y"
-        },
-        ops: {
-            "X": "",
-            "Y": "",
-            "F": "f10",
-            "+": "r-90",
-            "-": "r90"
-        }
-    });
-}
-
-function gosper() {
-    const gosper = lyndenn({
-        variables: ["A", "B"],
-        constants: ["-", "+"],
-        axiom: "A",
-        rules: {
-            "A": "A-B--B+A++AA+B-",
-            "B": "+A-BB--B-A++A+B"
-        },
-        ops: {
-            "A": "f10",
-            "B": "f10",
-            "-": "r60",
-            "+": "r-60"
-        }
-    });
-    prepCanvas(gosper.turtle);
-    gosper.draw(3);
+    turtle.moveTo(250, 500);
 }
 
 function tree() {
@@ -68,22 +29,71 @@ function tree() {
     });
 }
 
+const PRESETS = [
+    {
+        variables: ["A", "B"],
+        constants: ["-", "+"],
+        axiom: "A",
+        rules: {
+            "A": "A-B--B+A++AA+B-",
+            "B": "+A-BB--B-A++A+B"
+        },
+        ops: {
+            "A": "f10",
+            "B": "f10",
+            "+": "r60",
+            "-": "r-60"
+        },
+        order: 3
+    },
+    {
+        variables: ["X", "Y"],
+        constants: ["F", "+", "-"],
+        axiom: "FX",
+        rules: {
+            "X": "X+YF+",
+            "Y": "-FX-Y"
+        },
+        ops: {
+            "F": "f10",
+            "X": "",
+            "Y": "",
+            "+": "r90",
+            "-": "r-90"
+        },
+        order: 10
+    }
+]
+
+const ORDER = 3;
+
 const btnPresets = document.getElementById("btnPresets"),
     btnConfig = document.getElementById("btnConfig"),
     btnHelp = document.getElementById("btnHelp"),
     presets = document.getElementById("presets"),
     config = document.getElementById("config"),
     help = document.getElementById("help"),
-    mainBody = document.getElementById("main-body");
+    mainBody = document.getElementById("main-body"),
+    variables = document.getElementById("variables"),
+    constants = document.getElementById("constants"),
+    axiom = document.getElementById("axiom"),
+    rules = document.getElementById("rules"),
+    ops = document.getElementById("ops"),
+    order = document.getElementById("order"),
+    animate = document.getElementById("animate");
 
 btnPresets.addEventListener('click', () => {
     slideIn(presets);
 });
 btnConfig.addEventListener('click', () => {
     slideIn(config);
-})
+});
 btnHelp.addEventListener('click', () => {
     slideIn(help);
+});
+
+animate.addEventListener('click', () => {
+    configLyndenn();
 })
 
 Array.from(document.querySelectorAll('.x')).forEach(cross => {
@@ -92,6 +102,44 @@ Array.from(document.querySelectorAll('.x')).forEach(cross => {
         mainBody.style.opacity = 1; 
     })
 });
+
+Array.from(document.querySelectorAll('#presets .btn')).forEach((el, i) => {
+    el.addEventListener('click', () => {
+        const prev = document.querySelector('.active');
+        prev.classList.remove('active');
+        el.classList.add('active');
+        const run = lyndenn(PRESETS[i]);
+        prepCanvas(run.turtle);
+        run.draw(PRESETS[i].order);
+        slideOut(presets);
+    })
+})
+
+function configLyndenn() {
+    // read from the config form
+    // set up lyndenn
+    // run lyndenn
+    console.log("I'm here");
+    // parse variables,
+    // parse constants,
+    // parse axiom,
+    // parse rules,
+    // parse ops
+}
+
+function fillForm(config) {
+    variables.value = config.variables;
+    constants.value = config.constants;
+    axiom.value = config.axiom;
+    for (let i in config.rules) {
+        rules.innerHTML += `${i} => ${config.rules[i]},\n`;
+    }
+    for (let i in config.ops) {
+        ops.innerHTML += `${i} => ${config.ops[i]},\n`;
+    }
+    order.value = ORDER;
+}
+
 
 function slideIn(el) {
     mainBody.style.opacity = 0.1;
@@ -105,4 +153,5 @@ function slideOut(el) {
     el.classList.remove("slideIn");
 }
 
-gosper();
+fillForm(PRESETS[0]);
+
