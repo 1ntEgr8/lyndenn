@@ -65,7 +65,6 @@ const PRESETS = [
         order: 3
     },
 ]
-
 const ORDER = 3;
 
 const btnPresets = document.getElementById("btnPresets"),
@@ -81,7 +80,11 @@ const btnPresets = document.getElementById("btnPresets"),
     rules = document.getElementById("rules"),
     ops = document.getElementById("ops"),
     order = document.getElementById("order"),
-    animate = document.getElementById("animate");
+    animate = document.getElementById("animate"),
+    speed = document.getElementById("turtle-speed"),
+    size = document.getElementById("turtle-size"),
+    turCol = document.getElementById("turtle-color");
+    // shouldAnim = document.getElementById("anim");
 
 let currTurtle = null;
 
@@ -151,7 +154,7 @@ function fillForm(config) {
     order.value = ORDER;
 }
 
-function prepCanvas(turtle) {
+function prepTurtle(turtle) {
     const canvas = document.getElementById("canvas");
     canvas.appendChild(turtle.canvas);
     canvas.scrollLeft = "178";
@@ -160,7 +163,21 @@ function prepCanvas(turtle) {
     turtle.setStyles({
         "stroke-width": "4px",
         "stroke": "white"
-    })
+    });
+
+    if (speed.value) {
+        turtle.setSpeed(parseFloat(speed.value));
+    }
+    if (size.value) {
+        turtle.setStyles({
+            "stroke-width": size.value
+        });
+    }
+    if (turCol.value) {
+        turtle.setStyles({
+            "stroke": turCol.value
+        });
+    }
 }
 
 function centerTurtle(turtle) {
@@ -187,7 +204,7 @@ function runPreset(preset) {
 function runLyndenn(lyn, order) {
     if (currTurtle) currTurtle.destroy();
     currTurtle = lyn.turtle;
-    prepCanvas(lyn.turtle);
+    prepTurtle(lyn.turtle);
     lyn.draw(order);
 }
 

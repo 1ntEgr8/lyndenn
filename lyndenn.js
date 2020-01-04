@@ -49,20 +49,21 @@ function lyndenn(config) {
             turtle.moveTo(state.x, state.y);
             turtle.setHeading(state.heading);
             turtle.setSpeed(state.speed);
-        }
+        },
     }
 
     function dispatch(command) {
-        return command.trim()
-            .split(" ")
-            .filter(tk => tk.length > 0)
-            .forEach(tk => tks[tk[0]](tk));
+        if (command)
+            return command.trim()
+                .split(" ")
+                .filter(tk => tk.length > 0)
+                .forEach(tk => tks[tk[0]](tk));
     }
 
     const variables = new Set(config["variables"]);
     const constants = new Set(config["constants"]);
 
-    function exec(order, rule=config.axiom) {
+    function exec(order, rule = config.axiom) {
         if (order == 0) {
             dispatch(config.ops[rule]);
         } else {
