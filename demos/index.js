@@ -1,19 +1,3 @@
-function prepCanvas(turtle) {
-    const canvas = document.getElementById("canvas");
-    canvas.appendChild(turtle.canvas);
-    canvas.scrollLeft = "178";
-    canvas.scrollTop = "250";
-    centerTurtle(turtle);
-    turtle.setStyles({
-        "stroke-width": "4px",
-        "stroke": "white"
-    })
-}
-
-function centerTurtle(turtle) {
-    turtle.moveTo(500, 500);
-}
-
 function tree() {
     const tree = lyndenn({
         variables: ["0", "1"],
@@ -65,7 +49,21 @@ const PRESETS = [
             "-": "r-90"
         },
         order: 10
-    }
+    },
+    {
+        variables: ["F"],
+        constants: ["+", "-"],
+        axiom: "F",
+        rules: {
+            "F": "F+F-F-F+F",
+        },
+        ops: {
+            "F": "f10",
+            "+": "r-90",
+            "-": "r90"
+        },
+        order: 3
+    },
 ]
 
 const ORDER = 3;
@@ -98,13 +96,20 @@ btnHelp.addEventListener('click', () => {
 });
 
 animate.addEventListener('click', () => {
-    configLyndenn();
+    runLyndenn(lyndenn({
+        variables: variables.value.split(","),
+        constants: constants.value.split(","),
+        axiom: axiom.value,
+        rules: parseIntoObj(rules.innerHTML),
+        ops: parseIntoObj(ops.innerHTML),
+    }), parseInt(order.value));
+    slideOut(config);
 })
 
 Array.from(document.querySelectorAll('.x')).forEach(cross => {
     cross.addEventListener('click', (e) => {
         slideOut(e.target.parentElement);
-        mainBody.style.opacity = 1; 
+        mainBody.style.opacity = 1;
     })
 });
 
@@ -114,43 +119,53 @@ Array.from(document.querySelectorAll('#presets .btn')).forEach((el, i) => {
         prev.classList.remove('active');
         el.classList.add('active');
 
-        if (currTurtle) currTurtle.destroy();
-
-        fillForm(PRESETS[i]);
-        const run = lyndenn(PRESETS[i]);
-        currTurtle = run.turtle;
-        prepCanvas(run.turtle);
-        run.draw(PRESETS[i].order);
-
+        runPreset(PRESETS[i]);
         slideOut(presets);
     })
-})
+});
 
-function configLyndenn() {
-    // read from the config form
-    // set up lyndenn
-    // run lyndenn
-    console.log("I'm here");
-    // parse variables,
-    // parse constants,
-    // parse axiom,
-    // parse rules,
-    // parse ops
+function parseIntoObj(s) {
+    const tokens = s.split(",");
+    const obj = {};
+    tokens.forEach(token => {
+        const [key, value] = token.split(" =&gt; ");
+        if (key && value) {
+            obj[key.trim()] = value.trim();
+        }
+    })
+    return obj;
 }
 
 function fillForm(config) {
     variables.value = config.variables;
     constants.value = config.constants;
     axiom.value = config.axiom;
+    rules.innerHTML = "";
     for (let i in config.rules) {
         rules.innerHTML += `${i} => ${config.rules[i]},\n`;
     }
+    ops.innerHTML = "";
     for (let i in config.ops) {
         ops.innerHTML += `${i} => ${config.ops[i]},\n`;
     }
     order.value = ORDER;
 }
 
+function prepCanvas(turtle) {
+    const canvas = document.getElementById("canvas");
+    canvas.appendChild(turtle.canvas);
+    canvas.scrollLeft = "178";
+    canvas.scrollTop = "250";
+    centerTurtle(turtle);
+    turtle.setStyles({
+        "stroke-width": "4px",
+        "stroke": "white"
+    })
+}
+
+function centerTurtle(turtle) {
+    turtle.moveTo(500, 500);
+}
 
 function slideIn(el) {
     mainBody.style.opacity = 0.1;
@@ -164,5 +179,20 @@ function slideOut(el) {
     el.classList.remove("slideIn");
 }
 
-fillForm(PRESETS[0]);
+function runPreset(preset) {
+    fillForm(preset);
+    runLyndenn(lyndenn(preset), preset.order);
+}
 
+function runLyndenn(lyn, order) {
+    if (currTurtle) currTurtle.destroy();
+    currTurtle = lyn.turtle;
+    prepCanvas(lyn.turtle);
+    lyn.draw(order);
+}
+
+function init() {
+    runPreset(PRESETS[0]);
+}
+
+init();
