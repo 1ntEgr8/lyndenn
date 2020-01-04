@@ -1,5 +1,8 @@
 function prepCanvas(turtle) {
-    document.getElementById("canvas").appendChild(turtle.canvas);
+    const canvas = document.getElementById("canvas");
+    canvas.appendChild(turtle.canvas);
+    canvas.scrollLeft = "178";
+    canvas.scrollTop = "250";
     centerTurtle(turtle);
     turtle.setStyles({
         "stroke-width": "4px",
@@ -8,7 +11,7 @@ function prepCanvas(turtle) {
 }
 
 function centerTurtle(turtle) {
-    turtle.moveTo(250, 500);
+    turtle.moveTo(500, 500);
 }
 
 function tree() {
@@ -82,6 +85,8 @@ const btnPresets = document.getElementById("btnPresets"),
     order = document.getElementById("order"),
     animate = document.getElementById("animate");
 
+let currTurtle = null;
+
 btnPresets.addEventListener('click', () => {
     slideIn(presets);
 });
@@ -108,9 +113,15 @@ Array.from(document.querySelectorAll('#presets .btn')).forEach((el, i) => {
         const prev = document.querySelector('.active');
         prev.classList.remove('active');
         el.classList.add('active');
+
+        if (currTurtle) currTurtle.destroy();
+
+        fillForm(PRESETS[i]);
         const run = lyndenn(PRESETS[i]);
+        currTurtle = run.turtle;
         prepCanvas(run.turtle);
         run.draw(PRESETS[i].order);
+
         slideOut(presets);
     })
 })

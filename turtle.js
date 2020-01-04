@@ -28,6 +28,7 @@ class Turtle {
         this.windowHeight = windowHeight;
         this.heading = 0;
         this.isAnim = true;
+        this.isStop = false;
 
         this.speed = 0.2;
 
@@ -146,6 +147,20 @@ class Turtle {
         this._dispatch();
     }
 
+    destroy() {
+        this.stop();
+        this.canvas.remove();
+    }
+
+    stop() {
+        this.isStop = true;
+    }
+
+    start() {
+        this.isStop = false;
+        this._animate(this.dParts[this.currentProcessIndex]);
+    }
+
     _dispatch() {
         this.x = this.init_x;
         this.y = this.init_y;
@@ -219,7 +234,7 @@ class Turtle {
 
     _animateNext() {
         this.currentProcessIndex++;
-        if (this.currentProcessIndex >= this.dParts.length) {
+        if (this.isStop || this.currentProcessIndex >= this.dParts.length) {
             // stop animating
         } else {
             this._animate(this.dParts[this.currentProcessIndex]);
