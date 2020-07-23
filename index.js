@@ -96,12 +96,13 @@ btnHelp.addEventListener('click', () => {
 });
 
 animate.addEventListener('click', () => {
+    console.log(rules.value)
     runLyndenn(lyndenn({
         variables: variables.value.split(","),
         constants: constants.value.split(","),
         axiom: axiom.value,
-        rules: parseIntoObj(rules.innerHTML),
-        ops: parseIntoObj(ops.innerHTML),
+        rules: parseIntoObj(rules.value),
+        ops: parseIntoObj(ops.value),
     }), parseInt(order.value));
     slideOut(config);
 })
@@ -127,12 +128,14 @@ Array.from(document.querySelectorAll('#presets .btn')).forEach((el, i) => {
 function parseIntoObj(s) {
     const tokens = s.split(",");
     const obj = {};
+    console.log(tokens)
     tokens.forEach(token => {
-        const [key, value] = token.split(" =&gt; ");
+        const [key, value] = token.split("=>");
         if (key && value) {
             obj[key.trim()] = value.trim();
         }
-    })
+    });
+    console.log(obj);
     return obj;
 }
 
