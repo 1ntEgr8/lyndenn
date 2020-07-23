@@ -1,6 +1,8 @@
 # lyndenn
 🧬An L-system (Lindenmayer system) animator
 
+[demo](https://1ntegr8.github.io/lyndenn/)
+
 ## What's an L-system?
 To put it simply, it's a set of production rules that tell you how to expand a given set of symbols to its full form, provided you have some sort of grammar defined.
 
